@@ -18,6 +18,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.850.0",
     "@types/aws-lambda": "^8.10.152",
     "@types/uuid": "^10.0.0",
     "esbuild": "^0.25.8",

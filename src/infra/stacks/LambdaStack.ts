@@ -5,6 +5,7 @@ import { join } from 'path';
 import { LambdaIntegration } from 'aws-cdk-lib/aws-apigateway';
 import { ITable } from 'aws-cdk-lib/aws-dynamodb';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 interface LambdaStackProps extends StackProps{
     spacesTable : ITable
@@ -23,5 +24,15 @@ export class LambdaStack extends Stack{
             }
         });
         this.helloLambdaIntegration = new LambdaIntegration(helloLambda);
+
+        //iam config to allow lambda send list buckets command to s3 service
+        helloLambda.addToRolePolicy(new PolicyStatement({
+            effect:Effect.ALLOW,
+            actions:[
+                's3:ListBucket','s3:ListAllMyBuckets'
+            ],
+            resources:['*']
+
+        }));
     }
 }
